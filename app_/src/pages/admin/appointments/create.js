@@ -27,6 +27,11 @@ export default function CreateAppointments() {
   };
 
   const handleCreateAppointments = async () => {
+    if (!appointment.specialty || !appointment.comments || !appointment.student || !appointment.professional) {
+      setMessage({ message: "Por favor, preencha todos os campos.", status: "error" });
+      return;
+    }
+
     const appointmentWithDate = {
       ...appointment,
       date: new Date().toISOString() 
@@ -34,7 +39,7 @@ export default function CreateAppointments() {
 
     try {
       const response = await Axios.post(API_URL, appointmentWithDate);
-      setMessage({ message: response.data.message, status: "ok" });
+      setMessage({ message: response.data.sucesso, status: "ok" });
     } catch (error) {
       console.error('Erro ao criar Appointment:', error);
       setMessage({ message: "Erro ao criar Appointment!", status: "error" });

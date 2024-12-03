@@ -34,9 +34,14 @@ export default function CreateTeachers() {
   };
 
   const handleCreateTeachers = async () => {
+    if (!teacher.name || !teacher.school_disciplines || !teacher.contact || !teacher.phone_number || !teacher.status) {
+      setMessage({ message: "Por favor, preencha todos os campos.", status: "error" });
+      return;
+    }
+
     try {
       const response = await Axios.post(API_URL, teacher);
-      setMessage({ message: response.data.message, status: "ok" });
+      setMessage({ message: response.data.sucesso, status: "ok" });
     } catch (error) {
       console.error('Erro ao criar Teacher:', error);
       setMessage({ message: "Erro ao criar Teacher!", status: "error" });

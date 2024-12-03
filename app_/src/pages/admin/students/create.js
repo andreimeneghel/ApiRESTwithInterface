@@ -44,7 +44,7 @@ export default function CreateStudents() {
 
     try {
       const response = await Axios.post(API_URL, students);
-      setMessage({ message: response.data.message, status: "ok" });
+      setMessage({ message: response.data.sucesso, status: "ok" });
     } catch (error) {
       console.error('Erro ao criar o evento:', error.response || error);
       setMessage({ message: "Erro ao criar o evento!", status: "error" });
