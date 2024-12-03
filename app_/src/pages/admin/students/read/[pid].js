@@ -12,7 +12,6 @@ export default function ReadStudent() {
   const API_URL = "http://localhost:3001/api/students/";
 
   const [student, setStudent] = useState({
-    id: "",
     name: "",
     age: "",
     parents: "",

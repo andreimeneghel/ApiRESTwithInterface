@@ -3,11 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Define o esquema e o modelo do professor
- */
+
 const teacherSchema = new mongoose.Schema({
-    id: { type: String, required: true },
     name: { type: String, required: true },
     school_disciplines: { type: String, required: true },
     contact: { type: String, required: true },
@@ -52,7 +49,7 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        const teacher = await Teacher.findById(req.params.id); // Usando o _id do MongoDB
+        const teacher = await Teacher.findById(req.params.id); 
         if (!teacher) {
             return res.status(404).json({ erro: 'Professor não encontrado' });
         }
@@ -77,7 +74,6 @@ router.post('/', async (req, res) => {
     }
 
     const newTeacher = new Teacher({
-        id: uuidv4(),
         name,
         school_disciplines,
         contact,
@@ -105,9 +101,9 @@ router.put('/:id', async (req, res) => {
 
     try {
         const updatedTeacher = await Teacher.findByIdAndUpdate(
-            req.params.id,  // Usando o _id do MongoDB
+            req.params.id, 
             { name, school_disciplines, contact, phone_number, status },
-            { new: true, runValidators: true } // Garante que o professor será retornado atualizado
+            { new: true, runValidators: true } 
         );
 
         if (!updatedTeacher) {

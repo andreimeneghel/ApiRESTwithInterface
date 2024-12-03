@@ -21,6 +21,7 @@ export default function CreateStudents() {
   const [message, setMessage] = useState({ message: "", status: "" });
 
   const optionsStatus = [
+    { value: '', text: '-- Selecione um estado --' },
     { value: 'true', text: 'Ativo' },
     { value: 'false', text: 'Inativo' },
   ];
@@ -65,7 +66,7 @@ export default function CreateStudents() {
           message.status === "ok" ? <div className='alert alert-success' role='alert'> { message.message } <Link className='alert-link' href='/admin/students'>Voltar</Link></div> : 
           <div className='alert alert-danger' role='alert'> { message.message } <Link className='alert-link' href='/admin/students'>Voltar</Link></div>
         }
-                <h3> Cadastro de Usuário </h3>
+                <h3> Cadastro de Estudante </h3>
             
                 <form method="POST">
                 <div className="form-group">
