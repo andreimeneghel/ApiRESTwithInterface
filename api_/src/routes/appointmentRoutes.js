@@ -3,9 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Define o esquema e o modelo do agendamento
- */
+
 const appointmentSchema = new mongoose.Schema({
     specialty: { type: String, required: true },
     comments: { type: String },
@@ -48,10 +46,10 @@ router.get('/', async (req, res) => {
  *     tags: [Appointment]
  *     summary: Retorna um agendamento específico
  */
-// Buscar um Appointment pelo _id
+
 router.get('/:id', async (req, res) => {
     try {
-      const appointment = await Appointment.findById(req.params.id); // Certifique-se de que está buscando por _id
+      const appointment = await Appointment.findById(req.params.id); 
       if (!appointment) {
         return res.status(404).json({ error: 'Appointment não encontrado' });
       }
@@ -80,7 +78,6 @@ router.post('/', async (req, res) => {
     }
 
     const newAppointment = new Appointment({
-        id: uuidv4(),
         specialty,
         comments,
         date,
@@ -107,19 +104,19 @@ router.put('/:id', async (req, res) => {
     const { specialty, comments, date, student, professional } = req.body;
 
     try {
-        // Procura o agendamento pelo _id do MongoDB
+       
         const updatedAppointment = await Appointment.findByIdAndUpdate(
-            req.params.id,  // Usando o id da URL para buscar o agendamento
-            { specialty, comments, date, student, professional },  // Atualiza os campos necessários
-            { new: true, runValidators: true }  // Garante que o agendamento será retornado atualizado
+            req.params.id,  
+            { specialty, comments, date, student, professional }, 
+            { new: true, runValidators: true } 
         );
 
-        // Caso o agendamento não seja encontrado, retorna erro 404
+
         if (!updatedAppointment) {
             return res.status(404).json({ erro: 'Agendamento não encontrado' });
         }
 
-        // Retorna o agendamento atualizado
+
         res.json(updatedAppointment);
     } catch (err) {
         res.status(400).json({ erro: 'Erro ao atualizar o agendamento' });
@@ -135,7 +132,7 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
     try {
-        // A alteração aqui é que estamos agora buscando pelo campo "_id" do MongoDB, não o "id" customizado
+
         const deletedAppointment = await Appointment.findByIdAndDelete(req.params.id);
 
         if (!deletedAppointment) {

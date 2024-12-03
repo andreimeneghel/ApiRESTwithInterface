@@ -3,11 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Define o esquema e o modelo do evento
- */
+
 const eventsSchema = new mongoose.Schema({
-    id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, default: Date.now },
@@ -77,7 +74,6 @@ router.post('/', async (req, res) => {
     }
 
     const newEvent = new Event({
-        id: uuidv4(),
         title,
         description,
         date,
@@ -107,7 +103,7 @@ router.put('/:id', async (req, res) => {
         const updateData = { title, description, date, comments, status };
 
         const updatedEvent = await Event.findByIdAndUpdate(
-            req.params.id, // Atualizando pelo _id do MongoDB
+            req.params.id, 
             updateData,
             { new: true, runValidators: true }
         );

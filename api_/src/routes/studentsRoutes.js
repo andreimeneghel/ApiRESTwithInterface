@@ -3,11 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Define o esquema e o modelo do estudante
- */
+
 const studentsSchema = new mongoose.Schema({
-    id: { type: String, required: true },
     name: { type: String, required: true },
     age: { type: Number, required: true },
     parents: { type: String, required: true },
@@ -78,7 +75,6 @@ router.post('/', async (req, res) => {
     }
 
     const newStudent = new Student({
-        id: uuidv4(),
         name,
         age,
         parents,

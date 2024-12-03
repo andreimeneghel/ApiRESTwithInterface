@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
 
 const usersSchema = new mongoose.Schema({
-    id: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     user: { type: String, required: true },
@@ -69,7 +68,6 @@ router.post('/', async (req, res) => {
     const hashedPwd = await bcrypt.hash(pwd, salt);
 
     const newUser = new User({
-        id: uuidv4(),
         name,
         email,
         user,

@@ -3,9 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-/**
- * Define o esquema e o modelo do profissional
- */
+
 const professionalSchema = new mongoose.Schema({
     name: { type: String, required: true },
     specialty: { type: String, required: true },
@@ -57,7 +55,6 @@ router.get('/', async (req, res) => {
  */
 router.get('/:id', async (req, res) => {
     try {
-        // Usando _id para buscar no MongoDB
         const professional = await Professional.findById(req.params.id); 
         if (!professional) {
             return res.status(404).json({ erro: 'Profissional não encontrado' });
@@ -109,11 +106,11 @@ router.put('/:id', async (req, res) => {
     const { name, specialty, contact, phone_number, status } = req.body;
 
     try {
-        // Atualizando pelo _id do MongoDB
+
         const updatedProfessional = await Professional.findByIdAndUpdate(
-            req.params.id,  // Usando o _id para buscar e atualizar
+            req.params.id,  
             { name, specialty, contact, phone_number, status },
-            { new: true, runValidators: true }  // Garante que o agendamento será retornado atualizado
+            { new: true, runValidators: true } 
         );
 
         if (!updatedProfessional) {
@@ -135,7 +132,7 @@ router.put('/:id', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
     try {
-        // Deletando pelo _id do MongoDB
+        
         const deletedProfessional = await Professional.findByIdAndDelete(req.params.id);
 
         if (!deletedProfessional) {
