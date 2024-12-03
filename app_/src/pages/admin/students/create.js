@@ -21,6 +21,7 @@ export default function CreateStudents() {
   const [message, setMessage] = useState({ message: "", status: "" });
 
   const optionsStatus = [
+    { value: '', text: '-- Selecione um estado --' },
     { value: 'true', text: 'Ativo' },
     { value: 'false', text: 'Inativo' },
   ];
@@ -36,14 +37,19 @@ export default function CreateStudents() {
 
   
   const handleCreatestudents = async () => {
-    try {
-      const response = await Axios.post(API_URL, students); 
-      setMessage({ message: response.data.sucesso, status: "ok" });
-    } catch (error) {
-      console.error('Erro ao criar o Usuário:', error);
-      setMessage({ message: "Erro ao criar o Usuário!", status: "error" });
+    if (!students.name || !students.age || !students.parents || !students.phone || !students.special || !students.status) {
+      setMessage({ message: "Todos os campos são obrigatórios", status: "error" });
+      return;
     }
-  };
+
+    try {
+      const response = await Axios.post(API_URL, students);
+      setMessage({ message: response.data.message, status: "ok" });
+    } catch (error) {
+      console.error('Erro ao criar o evento:', error.response || error);
+      setMessage({ message: "Erro ao criar o evento!", status: "error" });
+    }
+  }
 
   return (
     <>
@@ -65,7 +71,7 @@ export default function CreateStudents() {
           message.status === "ok" ? <div className='alert alert-success' role='alert'> { message.message } <Link className='alert-link' href='/admin/students'>Voltar</Link></div> : 
           <div className='alert alert-danger' role='alert'> { message.message } <Link className='alert-link' href='/admin/students'>Voltar</Link></div>
         }
-                <h3> Cadastro de Usuário </h3>
+                <h3> Cadastro de Estudante </h3>
             
                 <form method="POST">
                 <div className="form-group">
